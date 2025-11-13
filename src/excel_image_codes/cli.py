@@ -22,7 +22,7 @@ def _add_render_arguments(parser: argparse.ArgumentParser) -> None:
     parser.add_argument(
         "-b",
         "--background",
-        help="Optional hex background colour (e.g. ffcc00 or #ffcc00).",
+        help="Optional background colour. Accepts hex (ffcc00, #ffcc00) or CSS names (gold).",
     )
     parser.set_defaults(human_readable=None)
     parser.add_argument(

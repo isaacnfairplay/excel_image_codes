@@ -57,7 +57,7 @@ http://localhost:8080/code128/nohr/Hello%20World.svg
 http://localhost:8080/ean13/ffefaa/hr/5901234123457.png
 ```
 
-* The optional colour segment must be a 3- or 6-digit hexadecimal RGB string (no leading `#` is required). It controls the image background while keeping barcode lines black.
+* The optional colour segment can be a 3- or 6-digit hexadecimal RGB string (no leading `#` is required) **or** one of the CSS named colours such as `lavenderblush`. It controls the image background while keeping barcode lines black.
 * Human-readable captions (digits beneath barcodes) can be toggled with the optional `hr` (or `human`) / `nohr` (or `raw`) segment. Omitting the flag keeps the default behaviour for that format.
 
 Excel formula snippet:
@@ -71,7 +71,7 @@ Excel formula snippet:
 ```python
 from excel_image_codes import render_image
 
-content_type, payload = render_image("qr", "Hello world", ".png", background_color="#fff0cc")
+content_type, payload = render_image("qr", "Hello world", ".png", background_color="lemonchiffon")
 with open("hello.png", "wb") as fh:
     fh.write(payload)
 
@@ -80,7 +80,7 @@ _, barcode_svg = render_image(
     "ABC123",
     ".svg",
     human_readable=False,
-    background_color="ffefaa",
+    background_color="whitesmoke",
 )
 ```
 

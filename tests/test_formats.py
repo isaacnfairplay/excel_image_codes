@@ -45,6 +45,12 @@ def test_background_colour_toggle() -> None:
     assert default != tinted
 
 
+def test_named_background_colour() -> None:
+    default = render_image("qr", "hello", ".png")[1]
+    tinted = render_image("qr", "hello", ".png", background_color="lavenderblush")[1]
+    assert default != tinted
+
+
 def test_datamaxtrix_alias_matches() -> None:
     direct = render_image("datamatrix", "hello", ".png")[1]
     alias = render_image("datamaxtrix", "hello", ".png")[1]
@@ -112,6 +118,9 @@ def test_server_background_segment() -> None:
         with urllib.request.urlopen(url) as response:
             assert response.status == 200
             assert response.headers["Content-Type"] == "image/png"
+        name_url = f"http://{host}:{port}/code128/lavenderblush/hr/Hello.png"
+        with urllib.request.urlopen(name_url) as response:
+            assert response.status == 200
         with pytest.raises(urllib.error.HTTPError) as excinfo:
             urllib.request.urlopen(f"http://{host}:{port}/code128/zzzzzz/Hello.png")
         assert excinfo.value.code == 404
