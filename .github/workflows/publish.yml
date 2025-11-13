@@ -13,6 +13,9 @@ permissions:
 
 jobs:
   release:
+    # Prevent an infinite loop where the workflow's own release commit triggers
+    # a new run that would bump the version yet again.
+    if: github.actor != 'github-actions[bot]'
     runs-on: ubuntu-latest
 
     steps:
