@@ -14,8 +14,12 @@ permissions:
 jobs:
   release:
     # Prevent an infinite loop where the workflow's own release commit triggers
-    # a new run that would bump the version yet again.
-    if: github.actor != 'github-actions[bot]'
+    # a new run that would bump the version yet again. Guard against both the
+    # push actor and the workflow's triggering actor being the automation bot,
+    # which happens when the bot pushes the version bump commit.
+    if: >-
+      github.actor != 'github-actions[bot]' &&
+      github.triggering_actor != 'github-actions[bot]'
     runs-on: ubuntu-latest
 
     steps:
