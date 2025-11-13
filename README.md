@@ -86,11 +86,12 @@ _, barcode_svg = render_image(
 
 ## Supported formats and extensions
 
-| Format    | Extensions                      |
-|-----------|----------------------------------|
-| `qr`      | `.png`, `.jpg`, `.jpeg`, `.svg` |
-| `code128` | `.png`, `.jpg`, `.jpeg`, `.svg` |
-| `ean13`   | `.png`, `.jpg`, `.jpeg`, `.svg` |
+| Format                      | Extensions                      |
+|-----------------------------|----------------------------------|
+| `qr`                        | `.png`, `.jpg`, `.jpeg`, `.svg` |
+| `code128`                   | `.png`, `.jpg`, `.jpeg`, `.svg` |
+| `ean13`                     | `.png`, `.jpg`, `.jpeg`, `.svg` |
+| `datamatrix` (`datamaxtrix` alias) | `.png`, `.jpg`, `.jpeg`       |
 
 ## Adding a new format
 

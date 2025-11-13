@@ -15,7 +15,8 @@ requires-python = ">=3.10"
 dependencies = [
   "qrcode>=7.4",
   "Pillow>=9.0",
-  "python-barcode>=0.15"
+  "python-barcode>=0.15",
+  "pystrich>=0.10"
 ]
 
 [project.optional-dependencies]
