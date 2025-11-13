@@ -17,7 +17,7 @@ def setup_function() -> None:
 
 def test_available_formats() -> None:
     formats = get_available_formats()
-    for name in ["qr", "code128", "ean13"]:
+    for name in ["qr", "code128", "ean13", "datamatrix", "datamaxtrix"]:
         assert name in formats
 
 
@@ -27,6 +27,7 @@ def test_available_formats() -> None:
         ("qr", "hello", ".png", "image/png", None),
         ("code128", "123456789", ".jpg", "image/jpeg", False),
         ("ean13", "5901234123457", ".svg", "image/svg+xml", True),
+        ("datamatrix", "hello", ".jpg", "image/jpeg", None),
     ],
 )
 def test_render_image(
@@ -42,6 +43,12 @@ def test_background_colour_toggle() -> None:
     default = render_image("qr", "hello", ".png")[1]
     tinted = render_image("qr", "hello", ".png", background_color="ffcc00")[1]
     assert default != tinted
+
+
+def test_datamaxtrix_alias_matches() -> None:
+    direct = render_image("datamatrix", "hello", ".png")[1]
+    alias = render_image("datamaxtrix", "hello", ".png")[1]
+    assert direct == alias
 
 
 def test_human_readable_svg_toggle() -> None:
