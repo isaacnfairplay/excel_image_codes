@@ -4,16 +4,17 @@ from __future__ import annotations
 
 import importlib
 import pkgutil
-import string
 import threading
 from typing import Dict, List, Tuple, Type
 
 from .base_format import CodeImageFormat
+from .colors import normalize_background_color
 
 _FORMATS: Dict[str, Type[CodeImageFormat]] = {}
 _FORMAT_INSTANCES: Dict[str, CodeImageFormat] = {}
 _CACHE: Dict[Tuple[str, str, str, bool | None, str | None], Tuple[str, bytes]] = {}
 _CACHE_LOCK = threading.Lock()
+
 
 
 def register_format(format_cls: Type[CodeImageFormat]) -> None:
@@ -53,16 +54,7 @@ def _load_builtin_formats() -> None:
 
 
 def _normalize_background(color: str | None) -> str | None:
-    if color is None:
-        return None
-    value = color.strip().lower()
-    if value.startswith("#"):
-        value = value[1:]
-    if len(value) == 3:
-        value = "".join(ch * 2 for ch in value)
-    if len(value) != 6 or any(ch not in string.hexdigits.lower() for ch in value):
-        raise ValueError("Background colour must be a hex string like 'ff00aa'.")
-    return f"#{value.upper()}"
+    return normalize_background_color(color)
 
 
 def render_image(

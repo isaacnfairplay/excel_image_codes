@@ -4,11 +4,11 @@ from __future__ import annotations
 
 import http.server
 import logging
-import re
 import socketserver
 from typing import Dict, Tuple
 from urllib.parse import unquote
 
+from .colors import looks_like_colour_token
 from .registry import render_image
 
 LOGGER = logging.getLogger(__name__)
@@ -19,7 +19,6 @@ class ExcelImageRequestHandler(http.server.BaseHTTPRequestHandler):
 
     HUMAN_TRUE = {"hr", "human", "with-text", "withtext", "text", "readable", "yes", "1"}
     HUMAN_FALSE = {"nohr", "plain", "raw", "without-text", "withouttext", "notext", "no", "0"}
-    _COLOR_RE = re.compile(r"^#?[0-9a-fA-F]{3}(?:[0-9a-fA-F]{3})?$")
 
     def do_GET(self) -> None:  # noqa: N802 (BaseHTTPRequestHandler API)
         try:
@@ -116,7 +115,7 @@ class ExcelImageRequestHandler(http.server.BaseHTTPRequestHandler):
         )
 
     def _is_color_segment(self, segment: str) -> bool:
-        return bool(self._COLOR_RE.match(segment))
+        return looks_like_colour_token(segment)
 
     def log_message(self, format: str, *args) -> None:  # noqa: A003 - BaseHTTPRequestHandler API
         LOGGER.info("%s - - %s", self.client_address[0], format % args)
