@@ -1,0 +1,1 @@
+"""Built-in image formats."""
