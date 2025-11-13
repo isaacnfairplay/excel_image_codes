@@ -114,6 +114,22 @@ pip install -e .[dev]
 pytest
 ```
 
+## Automated releases
+
+Every push to the `main` branch triggers the `Bump version and publish` GitHub
+Actions workflow. The workflow performs the following steps automatically:
+
+1. Runs `scripts/bump_version.py` to increment the patch component in
+   `pyproject.toml` and commit the change back to `main` with a matching Git
+   tag (for example `v0.1.1`).
+2. Builds the source distribution and wheel via `python -m build`.
+3. Publishes the artifacts to PyPI using the official `pypa/gh-action-pypi-publish`
+   action.
+
+To enable publishing you only need to add a `PYPI_API_TOKEN` secret to the
+repository that contains a valid PyPI token with publishing rights for the
+`excel-image-codes` project.
+
 ## License
 
 MIT © Excel Image Codes Developers
